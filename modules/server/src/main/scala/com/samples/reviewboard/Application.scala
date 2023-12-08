@@ -1,8 +1,7 @@
 package com.samples.reviewboard
 
-import com.samples.reviewboard.http.controllers.HealthController
+import com.samples.reviewboard.http.HttpApi
 import sttp.tapir.*
-import sttp.tapir.server.ServerEndpoint
 import sttp.tapir.server.ziohttp.ZioHttpInterpreter
 import zio.*
 import zio.http.Server
@@ -10,9 +9,9 @@ import zio.http.Server
 object Application extends ZIOAppDefault {
 
   private val serverProgram = for {
-    controller <- HealthController.makeZIO
+    endpoints <- HttpApi.endpointsZIO
     _ <- Server.serve(
-      ZioHttpInterpreter().toHttp(List(controller.health))
+      ZioHttpInterpreter().toHttp(endpoints)
     )
     _ <- Console.printLine("Server started...")
   } yield ()
