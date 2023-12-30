@@ -26,5 +26,5 @@ lazy val root = (project in file("."))
   .settings(
     name := "zio-fullstack"
   )
-  .aggregate(foundations, server)
-  .dependsOn(foundations, server)
+  .aggregate(server)
+  .dependsOn(server)
