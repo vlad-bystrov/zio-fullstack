@@ -1,6 +1,9 @@
 package com.samples.reviewboard
 
 import com.samples.reviewboard.http.HttpApi
+import com.samples.reviewboard.repositories.{CompanyRepositoryLive, Repository}
+import com.samples.reviewboard.services.{CompanyService, CompanyServiceLive}
+import io.getquill.SnakeCase
 import sttp.tapir.*
 import sttp.tapir.server.ziohttp.ZioHttpInterpreter
 import zio.*
@@ -16,5 +19,11 @@ object Application extends ZIOAppDefault {
     _ <- Console.printLine("Server started...")
   } yield ()
 
-  override def run: Task[Any] = serverProgram.provide(Server.default)
+  override def run: Task[Any] =
+    serverProgram.provide(
+      Server.default,
+      CompanyServiceLive.layer,
+      CompanyRepositoryLive.layer,
+      Repository.dataLayer
+    )
 }
