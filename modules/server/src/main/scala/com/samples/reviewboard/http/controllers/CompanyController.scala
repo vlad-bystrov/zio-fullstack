@@ -8,16 +8,16 @@ import zio.{RIO, Task, ZIO}
 private class CompanyController(service: CompanyService) extends BaseController with CompanyEndpoints {
 
   val create: ServerEndpoint[Any, Task] =
-    createEndpoint.serverLogicSuccess { req =>
-      service.create(req)
+    createEndpoint.serverLogic[Task] { req =>
+      service.create(req).either
     }
 
   val getAll: ServerEndpoint[Any, Task] =
-    getAllEndpoint.serverLogicSuccess(_ => service.getAll)
+    getAllEndpoint.serverLogic[Task](_ => service.getAll.either)
 
   val getById: ServerEndpoint[Any, Task] =
-    getByIdEndpoint.serverLogicSuccess { id =>
-      ZIO.attempt(id.toLong).flatMap(idLong => service.getById(idLong))
+    getByIdEndpoint.serverLogic[Task] { id =>
+      ZIO.attempt(id.toLong).flatMap(idLong => service.getById(idLong)).either
     }
 
   override val routes: List[ServerEndpoint[Any, Task]] = List(create, getAll, getById)
