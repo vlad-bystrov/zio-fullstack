@@ -42,7 +42,7 @@ object CompanyControllerSpec extends ZIOSpecDefault {
   } yield backendStub
 
   override def spec: Spec[TestEnvironment with Scope, Any] =
-    suite("CompanyControllerSpec")(
+    suite("CompanyControllerTest")(
       test("create company") {
         val program = for {
           backendStub <- backendStubZIO(_.create)

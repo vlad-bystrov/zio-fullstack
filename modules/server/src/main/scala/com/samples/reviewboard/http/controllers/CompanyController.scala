@@ -1,14 +1,11 @@
 package com.samples.reviewboard.http.controllers
 
-import com.samples.reviewboard.domain.data.Company
 import com.samples.reviewboard.http.endpoints.CompanyEndpoints
 import com.samples.reviewboard.services.CompanyService
 import sttp.tapir.server.ServerEndpoint
-import zio.{RIO, Task, UIO, ZIO}
+import zio.{RIO, Task, ZIO}
 
-import scala.collection.mutable
-
-class CompanyController private (service: CompanyService) extends BaseController with CompanyEndpoints {
+private class CompanyController(service: CompanyService) extends BaseController with CompanyEndpoints {
 
   val create: ServerEndpoint[Any, Task] =
     createEndpoint.serverLogicSuccess { req =>

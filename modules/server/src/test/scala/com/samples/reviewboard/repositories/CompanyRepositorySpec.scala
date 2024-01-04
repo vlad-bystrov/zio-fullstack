@@ -1,11 +1,9 @@
 package com.samples.reviewboard.repositories
 
-import org.testcontainers.containers.PostgreSQLContainer
 import com.samples.reviewboard.domain.data.Company
 import com.samples.reviewboard.syntax.*
-import org.postgresql.ds.PGSimpleDataSource
+import zio.test.{Spec, TestEnvironment, ZIOSpecDefault}
 import zio.{Scope, ZIO, ZLayer}
-import zio.test.{Gen, Spec, TestEnvironment, ZIOSpecDefault}
 
 import java.sql.SQLException
 import javax.sql.DataSource
@@ -14,6 +12,8 @@ import scala.util.Random
 object CompanyRepositorySpec extends ZIOSpecDefault with RepositorySpec {
 
   private val testCompany = Company(1L, "test-co", "Test Co", "testco.org")
+
+  override protected val initScript: String = "sql/companies.sql"
 
   override def spec: Spec[TestEnvironment with Scope, Any] =
     suite("CompanyRepositoryTest")(
@@ -69,7 +69,7 @@ object CompanyRepositorySpec extends ZIOSpecDefault with RepositorySpec {
           fetchedById <- repo.getById(company.id)
         } yield fetchedById
 
-        program.assert("inspect result from 'update'")(_.isEmpty)
+        program.assert("inspect result from 'delete'")(_.isEmpty)
       },
       test("get all companies") {
         val program = for {

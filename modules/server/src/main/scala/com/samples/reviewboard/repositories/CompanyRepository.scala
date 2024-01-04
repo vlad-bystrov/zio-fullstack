@@ -13,7 +13,7 @@ trait CompanyRepository {
   def getById(id: Long): Task[Option[Company]]
 }
 
-class CompanyRepositoryLive(quill: Quill.Postgres[SnakeCase]) extends CompanyRepository {
+private class CompanyRepositoryLive(quill: Quill.Postgres[SnakeCase]) extends CompanyRepository {
 
   import quill.*
 

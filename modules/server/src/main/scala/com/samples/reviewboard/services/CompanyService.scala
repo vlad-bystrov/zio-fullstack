@@ -3,9 +3,7 @@ package com.samples.reviewboard.services
 import com.samples.reviewboard.domain.data.Company
 import com.samples.reviewboard.http.requests.CreateCompanyRequest
 import com.samples.reviewboard.repositories.CompanyRepository
-import zio.{Task, ULayer, URLayer, ZIO, ZLayer}
-
-import scala.collection.mutable
+import zio.{Task, URLayer, ZIO, ZLayer}
 
 trait CompanyService {
   def create(companyReq: CreateCompanyRequest): Task[Company]
