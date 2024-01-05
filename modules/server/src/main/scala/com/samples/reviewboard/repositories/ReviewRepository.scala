@@ -65,7 +65,7 @@ private class ReviewRepositoryLive(quill: Quill.Postgres[SnakeCase]) extends Rev
 }
 
 object ReviewRepositoryLive {
-  val layer: URLayer[Quill.Postgres[SnakeCase], ReviewRepositoryLive] = ZLayer {
+  val layer: URLayer[Quill.Postgres[SnakeCase], ReviewRepository] = ZLayer {
     ZIO.serviceWith[Quill.Postgres[SnakeCase]](quill => ReviewRepositoryLive(quill))
   }
 }

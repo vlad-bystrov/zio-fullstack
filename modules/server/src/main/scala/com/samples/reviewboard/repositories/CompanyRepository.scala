@@ -56,7 +56,7 @@ private class CompanyRepositoryLive(quill: Quill.Postgres[SnakeCase]) extends Co
 }
 
 object CompanyRepositoryLive {
-  val layer: URLayer[Quill.Postgres[SnakeCase], CompanyRepositoryLive] = ZLayer {
+  val layer: URLayer[Quill.Postgres[SnakeCase], CompanyRepository] = ZLayer {
     ZIO.serviceWith[Quill.Postgres[SnakeCase]](quill => CompanyRepositoryLive(quill))
   }
 }
